@@ -1,0 +1,14 @@
+{
+    "name": "sharzon/instagram-followers-scanner",
+    "description": "Scanner of Instagram account followers",
+    "type": "project",
+    "require": {
+        "raiym/instagram-php-scraper": "^0.8.6",
+        "nesbot/carbon": "^1.22"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+<?php
+
+require_once "vendor/autoload.php";
+
+use App\DB;
+use App\InstagramProcessing;
+
+function install()
+{
+    DB::init();
+    mkdir('cache/cli/Files', 0777, true);
+}
+
+function add($accounts)
+{
+    foreach ($accounts as $account) {
+        InstagramProcessing::initAccount($account);
+    }
+}
+
+function scan()
+{
+    $pdo = DB::getPDO();
+    $stmt = $pdo->prepare('SELECT DISTINCT account FROM `log‐scan`');
+    $stmt->execute();
+
+    while ($account = $stmt->fetchColumn()) {
+        InstagramProcessing::scanAccount($account);
+    }
+}
+
+switch ($argv[1]) {
+    case 'install':
+        install();
+        break;
+    case 'scan':
+        scan();
+        break;
+    case 'add':
+        add(array_slice($argv, 2));
+        break;
+}
+
